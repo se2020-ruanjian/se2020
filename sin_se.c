@@ -3,7 +3,7 @@
 using namespace std;
 const double TINY_VALUE = 1e-10;  //计算精度
 
-double se_sin(double x) {   //为了和标准库中的sin()函数区别，所以取名为se_sin()函数
+double sin_se(double x) {   //为了和标准库中的sin()函数区别，所以取名为sin_se()函数
      double n = x,sum=0;
       int i = 1;
       do
@@ -20,9 +20,9 @@ double se_sin(double x) {   //为了和标准库中的sin()函数区别，所以
      double k;
      cin >> r >> s;
      if (r*r <= s * s) 
-         k = sqrt(se_sin(r)*se_sin(r) + se_sin(s)*se_sin(s));
+         k = sqrt(sin_se(r)*sin_se(r) + sin_se(s)*sin_se(s));
      else 
-         k = se_sin(r*s) /2 ;
+         k = sin_se(r*s) /2 ;
      cout << k;
      return 0;
  }
