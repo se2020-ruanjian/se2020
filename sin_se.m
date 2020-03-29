@@ -1,23 +1,23 @@
-function [sin_se]=sin_se(s)
-% ³õÊ¼»¯
-die = 16;%µü´ú´ÎÊı
-x = zeros(die+1,1);
-y = zeros(die+1,1);
-z = zeros(die+1,1);
-x(1) = 0.607253;%³õÊ¼ÉèÖÃ
-input('s=');
-z(1)=s* pi/180;
-% z(1) = s*pi/180;%´ıÇó½Ç¶È¦È
-%µü´ú²Ù×÷
-for i = 1:die
-    if z(i) >= 0
+function [t]=sin_se(s)
+%åˆå§‹åŒ–
+x = 1;
+y = 0;
+z = s * pi /180;
+a = 0;
+d = 1;
+k = 0.6073; %kä¸ºå¢ç›Š
+x = k*x;
+while a<100 %æ­¤å¤„ä¸èƒ½åˆ¤æ–­dçš„è´Ÿå·æ§åˆ¶å¾ªç¯ï¼Œä¼šæ­»å¾ªç¯ã€‚åº”ç”¨aæ¬¡æ•°æ§åˆ¶ã€‚
+    if z>=0
         d = 1;
-    else
-        d = -1;
+    else d = -1;
     end
-    x(i+1) = x(i) - d*y(i)*(2^(-(i-1)));
-    y(i+1) = y(i) + d*x(i)*(2^(-(i-1)));
-    z(i+1) = z(i) - d*atan(2^(-(i-1)));
+%è¿­ä»£
+    xNew = x;
+    x = xNew-(y*d*(1/2^a));
+    y = y+(xNew*d*(1/2^a));
+    z = z-(d*(atan(1/2^a)));
+    a = a+1;
 end
-sin_se= vpa(y(17),10)
+t = y;
 end
