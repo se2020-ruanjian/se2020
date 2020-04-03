@@ -15,6 +15,6 @@ while abs(temp_sum)>my_eps
     temp_sum=symbol*x^power/factorial(power);
     
 end
-cos_se = num2str(sum,3);
+cos_se = sum;
 end
 
