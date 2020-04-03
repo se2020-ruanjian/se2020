@@ -1,6 +1,6 @@
 function cos_se = cos_se( A )
-%% cos£¨x)= 1 - x^2/2! + x^4/4! Ê¹ÓÃÌ©ÀÕ¼¶Êý¼ÆËãcosº¯Êý
-x = (A/180)*pi;%°ÑÊäÈëµÄ½Ç¶È×ª»»Îª»¡¶È
+%% cosï¼ˆx)= 1 - x^2/2! + x^4/4! ä½¿ç”¨æ³°å‹’çº§æ•°è®¡ç®—coså‡½æ•°
+x = (A/180)*pi;%æŠŠè¾“å…¥çš„è§’åº¦è½¬æ¢ä¸ºå¼§åº¦
  
 %%
 symbol=1;
@@ -15,6 +15,6 @@ while abs(temp_sum)>my_eps
     temp_sum=symbol*x^power/factorial(power);
     
 end
-cos_se = num2str(sum,4);
+cos_se = num2str(sum,3);
 end
 
