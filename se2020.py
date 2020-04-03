@@ -21,6 +21,23 @@ root = Tk()
 #调用matlab中m文件函数
 eng = matlab.engine.start_matlab()
 
+#调用c语言文件中函数
+sin_c = CDLL('./sin_se.so')
+cos_c = CDLL('./cos_se.so')
+tan_c = CDLL('./tan_se.so')
+cot_c = CDLL('./cot_se.so')
+
+sin_se_c = sin_c.sin_se
+sin_se_c.restype = c_float
+
+cos_se_c = cos_c.cos_se
+cos_se_c.restype = c_float
+
+tan_se_c = tan_c.tan_se
+tan_se_c.restype = c_float
+
+cot_se_c = cot_c.cot_se
+cot_se_c.restype = c_float
 
 sv0=StringVar()    #sv0为输入
 sv1=StringVar()    #sv1~4为matlab语言的输出
@@ -31,7 +48,7 @@ sv5=StringVar()    #sv5~8为python语言的输出
 sv6=StringVar()
 sv7=StringVar()
 sv8=StringVar() 
-sv9=StringVar()    #sv1~4为c语言的输出
+sv9=StringVar()    #sv9~12为c语言的输出
 sv10=StringVar()
 sv11=StringVar()
 sv12=StringVar()
@@ -148,14 +165,30 @@ def h2():
     sv2.set(eng.cos_se(str))
     sv3.set(eng.tan_se(str))
     sv4.set(eng.cot_se(str))
+    
     sv5.set(sin_se_p(str))      #5~8python输出值
     sv6.set(cos_se_p(str))
     sv7.set(tan_se_p(str))
     sv8.set(cot_se_p(str))
-    sv9.set()      #9~12c输出值
-    sv10.set()
-    sv11.set()
-    sv12.set()
+    
+    a = float(sv0.get()) #9~12c输出值
+    if bt1['text']=='弧度':
+        a = (a *180/np.pi) + 360   #所有函数输入角度，这里进行弧度角度转换
+    a = c_float(a)
+    sin = sin_se_c(a)
+    cos = cos_se_c(a)
+    tan = tan_se_c(a)
+    cot = cot_se_c(a)
+    
+    sin = ("%.16f" % sin)
+    cos = ("%.16f" % cos)
+    tan = ("%.16f" % tan)
+    cot = ("%.16f" % cot)
+    
+    sv9.set(sin)
+    sv10.set(cos)
+    sv11.set(tan)
+    sv12.set(cot)
 
 bt1=Button(root,text='角度',font=('KaiTi',12,'bold'),width=5,height=2,command=h1)
 bt1.grid(row=1,column=0,sticky='e')
