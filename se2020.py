@@ -8,6 +8,7 @@ from Tkinter import *
 import numpy as np
 import matlab.engine
 from ctypes import *
+import math
 
 #调用编写的三角函数的python模块
 from sin_se import sin_se_p
@@ -20,59 +21,61 @@ root = Tk()
 #调用matlab中m文件函数
 eng = matlab.engine.start_matlab()
 
-#加载编译好的so文件
-#sinse = CDLL('./sin_se.so')
-#调用c文件的函数sin_se.sin_se(),实现sin的计算
 
-sv0=StringVar()
-sv1=StringVar()
+sv0=StringVar()    #sv0为输入
+sv1=StringVar()    #sv1~4为matlab语言的输出
 sv2=StringVar()
 sv3=StringVar()
 sv4=StringVar()
-sv5=StringVar()
+sv5=StringVar()    #sv5~8为python语言的输出
 sv6=StringVar()
 sv7=StringVar()
-sv8=StringVar()  #Input and output initialization
+sv8=StringVar() 
+sv9=StringVar()    #sv1~4为c语言的输出
+sv10=StringVar()
+sv11=StringVar()
+sv12=StringVar()
 
 #界面编写
-l1=Label(text="三角函数",font=('KaiTi',12,'bold'))
+l1=Label(text="三角函数计算",font=('KaiTi',12,'bold'))
 l1.grid(row=0,column=0,columnspan=2)        #Title and Title Location
 
-#input grid location initialization
+#输入网格
 i1=Entry()
 i1.grid(row=3,column=1)
 i1.config(textvariable=sv0)
-in1=Label(text="请输入角度",font=('KaiTi',12,'bold'))
+in1=Label(text="请输入：",font=('KaiTi',12,'bold'))
 in1.grid(row=3,column=0)
 
+#输出网格,matlab
 in1=Label(text="matlab语言：",font=('KaiTi',12,'bold'))
 in1.grid(row=4,column=0)
 
-#output grid location initialization
 o1=Entry()
-o1.grid(row=5,column=1)
+o1.grid(row=6,column=1)
 o1.config(textvariable=sv1, state='readonly')
 out1=Label(text="sin:",font=('KaiTi',12,'bold'))
-out1.grid(row=5,column=0)
+out1.grid(row=6,column=0)
 
 o2=Entry()
-o2.grid(row=6,column=1)
+o2.grid(row=7,column=1)
 o2.config(textvariable=sv2, state='readonly')
 out2=Label(text="cos:",font=('KaiTi',12,'bold'))
-out2.grid(row=6,column=0)
+out2.grid(row=7,column=0)
 
 o3=Entry()
-o3.grid(row=7,column=1)
+o3.grid(row=8,column=1)
 o3.config(textvariable=sv3, state='readonly')
 out3=Label(text="tan:",font=('KaiTi',12,'bold'))
-out3.grid(row=7,column=0)
+out3.grid(row=8,column=0)
 
 o4=Entry()
-o4.grid(row=8,column=1)
+o4.grid(row=9,column=1)
 o4.config(textvariable=sv4, state='readonly')
 out4=Label(text="cot:",font=('KaiTi',12,'bold'))
-out4.grid(row=8,column=0)
+out4.grid(row=9,column=0)
 
+#输出网格,python
 in1=Label(text="python语言：",font=('KaiTi',12,'bold'))
 in1.grid(row=10,column=0)
 
@@ -100,39 +103,65 @@ o8.config(textvariable=sv8, state='readonly')
 out8=Label(text="cot:",font=('KaiTi',12,'bold'))
 out8.grid(row=14,column=0)
 
+#输出网格,c语言
+in1=Label(text="c语言：",font=('KaiTi',12,'bold'))
+in1.grid(row=15,column=0)
+
+o9=Entry()
+o9.grid(row=16,column=1)
+o9.config(textvariable=sv9, state='readonly')
+out9=Label(text="sin:",font=('KaiTi',12,'bold'))
+out9.grid(row=16,column=0)
+o10=Entry()
+o10.grid(row=17,column=1)
+o10.config(textvariable=sv10, state='readonly')
+out10=Label(text="cos:",font=('KaiTi',12,'bold'))
+out10.grid(row=17,column=0)
+o11=Entry()
+o11.grid(row=18,column=1)
+o11.config(textvariable=sv11, state='readonly')
+out11=Label(text="tan:",font=('KaiTi',12,'bold'))
+out11.grid(row=18,column=0)
+o12=Entry()
+o12.grid(row=19,column=1)
+o12.config(textvariable=sv12, state='readonly')
+out12=Label(text="cot:",font=('KaiTi',12,'bold'))
+out12.grid(row=19,column=0)
 
 #button function,角度/弧度的转换
 def h1():         #Angle and radian control button
     if bt1['text']=='弧度':
         bt1['text']='角度'
-        print('弧度')
+
     else:
         bt1['text']='弧度'
-        print('角度')
+
 
 #radian = float(sv0.get()) * np.pi/180
 
 #实现计算
 def h2():
-    radian = float(sv0.get())
-    sv1.set(round(eng.sin_se(radian),3))
-    sv2.set(eng.cos_se(radian))           #精度已在cos_se的m文件中控制
-    sv3.set(round(eng.tan_se(radian),3))
-    sv4.set(round(eng.cot_se(radian),3))
-    sv5.set(round(sin_se_p(radian),3))
-    sv6.set(round(cos_se_p(radian),3))
-    sv7.set(round(tan_se_p(radian),3))
-    sv8.set(round(cot_se_p(radian),3))
+    str = float(sv0.get())
+    if bt1['text']=='弧度':
+        str = str * (180/np.pi)     #所有函数输入角度，这里进行弧度角度转换
+    sv1.set(eng.sin_se(str))    #1~4matlab输出值
+    sv2.set(eng.cos_se(str))
+    sv3.set(eng.tan_se(str))
+    sv4.set(eng.cot_se(str))
+    sv5.set(sin_se_p(str))      #5~8python输出值
+    sv6.set(cos_se_p(str))
+    sv7.set(tan_se_p(str))
+    sv8.set(cot_se_p(str))
+    sv9.set()      #9~12c输出值
+    sv10.set()
+    sv11.set()
+    sv12.set()
 
-bt1=Button(root,text='弧度',font=('KaiTi',12,'bold'),width=5,height=2,command=h1)
-bt1.grid(row=1,column=0,columnspan=1,rowspan=2,sticky='e')
+bt1=Button(root,text='角度',font=('KaiTi',12,'bold'),width=5,height=2,command=h1)
+bt1.grid(row=1,column=0,sticky='e')
 
-if bt1['text']=='角度' :
-    str = float(sv0.get() * np.pi/180)
-else:
-    str = sv0.get()    #Conversion formula of angle and radian
 
 bt2=Button(text="计算",font=('KaiTi',12,'bold'),width=5,height=2, command=h2)
-bt2.grid(row=1,column=1,columnspan=1,rowspan=2,sticky='e')
+bt2.grid(row=1,column=1,sticky='e')
 
 root.mainloop()
