@@ -1,28 +1,39 @@
-#include<iostream>
-#include<cmath>
-using namespace std;
-const double TINY_VALUE = 1e-10;  //计算精度
+#include <stdio.h>
+#include <math.h>
+#include <stdlib.h>
 
-double sin_se(double x) {   //为了和标准库中的sin()函数区别，所以取名为sin_se()函数
-     double n = x,sum=0;
-      int i = 1;
-      do
-     {
-         sum += n;
-         i++;
-         n = -n * x*x / (2 * i - 1) / (2 * i - 2);
-         
-         } while (fabs(n)>=TINY_VALUE);
-     return sum;
- }
- int main() {
-     int r, s;
-     double k;
-     cin >> r >> s;
-     if (r*r <= s * s) 
-         k = sqrt(sin_se(r)*sin_se(r) + sin_se(s)*sin_se(s));
-     else 
-         k = sin_se(r*s) /2 ;
-     cout << k;
-     return 0;
- }
+#define PI 3.141592
+
+float sin_se(float);
+
+float Factorial(int n)    //阶乘
+{
+	//long long 占8个字节
+	float i, factorial = 1;
+
+	for (i = 1; i <= n ; i++)
+	{
+		factorial *= i;
+	}
+	
+	return factorial;
+}
+
+float sin_se(float x)
+{
+	float sin_se(x) = 0.0;
+	int m;
+	x = (fmod(x,360) * PI / 180);
+	for(m = 1; m <= 12; m++)    //sinx的泰勒级数，m控制加到后面第几项
+	{
+		if (m % 2 == 0)
+		{
+			sin_se(x) -= pow(x, (2 * m - 1 )) / Factorial(2 * m - 1 );
+		}
+		else
+		{
+			sin_se(x) += pow(x, (2 * m - 1 )) / Factorial(2 * m - 1 );
+		}
+	}
+	return sin_se(x);
+}
