@@ -3,11 +3,11 @@
 #include <stdlib.h>
 
 #define PI 3.141592
-
-double Factorial(int n)  //阶乘
+float cot_se(float);
+float Factorial(int n)  //阶乘
 {
 	//long long 占8个字节
-	double i, factorial = 1;
+	float i, factorial = 1;
 
 	for (i = 1; i <= n ; i++)
 	{
@@ -17,7 +17,7 @@ double Factorial(int n)  //阶乘
 	return factorial;
 }
 
-double cot_se(double x)
+float cot_se(float x)
 {
 	if (x == 0 || fmod(x,180)== 0 || fmod(x,-180) == 0)  //非定义域的值
 	{
@@ -25,7 +25,7 @@ double cot_se(double x)
 	}
 	else
 	{
-		double y = 0.0,z = 1.0;  //y = sinx;z = cos x
+		float y = 0.0,z = 1.0;  //y = sinx;z = cos x
 	int m1,m2;
 	x = (fmod(x,360) * PI / 180);
 	for(m1 = 1; m1 <= 20; m1++)    //sinx的泰勒，m1控制加到第几项
@@ -52,15 +52,4 @@ double cot_se(double x)
 	}
 	return  z/y;
 	}
-}
-
-int main()
-{
-	//获得参数并转换为int
-	double x;
-	printf("请输入需要计算的角度值：\n");
-	scanf("%lf", &x);
-	printf("%.3lf\n", cot_se(x));
-	system("PAUSE");
-	return 0;
 }
