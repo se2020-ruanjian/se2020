@@ -2,6 +2,7 @@
 1.项目说明
 -------
    该软件基于python,matlab,C三种语言开发，实现了三角函数(sin,cos,tan,cot)的计算，目前处于1.0版本。  
+     
    目标：使用python语言完成主函数，界面以及接口设计；使用python,matlab和C语言分别实现四种三角函数。使用三种语言，方便后期在测试阶段进行精度比较，在2.0版本可以进行取舍，选择精度更高的两种语言。  
    
 2.文件说明
@@ -21,15 +22,19 @@
 3.软件安装
 --------
    请先下载该项目github上的所有程序文件，本软件需要安装matlab和python。(经测试matlab2016支持python2.7/3.3/3.4版本，matlab2019支持python2.7/3.6/3.7)  
+     
    安装完成之后，请运行se2020.py文件，由于本软件使用python语言调用matlab语言混合编程，如若报错“ImportError: No module named matlab.engine"，请查看教程：https://blog.csdn.net/william_hehe/article/details/82828873 以解决。  
 
 4.使用说明及界面展示
 ---------
    运行se2020.py，启动三角函数计算器，界面如下：  
    ![](https://raw.githubusercontent.com/se2020-ruanjian/se2020/master/1.png)  
+     
    点击角度弧度按钮可以实现输入角度和输入弧度进行转换，在输入框进行输入后，点击计算按钮进行计算，结果将展示在输出框内，如下图：  
+     
    输入角度：45°  
    ![](https://raw.githubusercontent.com/se2020-ruanjian/se2020/master/2.png)  
+     
    输入弧度:1.4072(π/3)  
    ![](https://raw.githubusercontent.com/se2020-ruanjian/se2020/master/3.png)  
 
