@@ -4,7 +4,7 @@ import sys
 reload(sys)
 sys.setdefaultencoding('utf8') 
 
-from Tkinter import *
+from tkinter import *
 import numpy as np
 import matlab.engine
 from ctypes import *
