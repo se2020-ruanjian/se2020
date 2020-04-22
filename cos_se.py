@@ -1,27 +1,18 @@
-#-*-coding:utf8;-*-
-#qpy:3
-#qpy:console
-import math
+import math 
+from math import pi
 
-def fa(a):
-    b=1
-    while a!=1:
-        b*=a
-        a-=1
-    return b
+def cos_se_p(angle):
+    x = (angle/180)*pi;
+    cosTotal  = 1
+    count = 2
+    term = 1
+    x=float(x) 
+    while abs(term) > 1e-20:
+        term *= (-x * x)/( count * (count-1) )   
+        cosTotal += term
+        count += 2
+        #print("%1d  %22.17e" % (count, term))
+    return cosTotal
 
-def taylor(x,n):
-    a=1
-    count=1
-    for k in range(1,n):
-        if count%2!=0:
-            a-=(x**(2*k))/fa(2*k)
-        else:
-            a+=(x**(2*k))/fa(2*k)
-        count+=1
-    return a
-
-def cos_se(x):
-    x = (x/180)*math.pi;
-    return taylor(x,10)
-
+#print( cos_se_p(0) )
+#print( math.cos(0) )
